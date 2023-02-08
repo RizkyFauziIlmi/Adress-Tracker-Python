@@ -1,6 +1,15 @@
 from requests import get
 from os import name, system
 from tabulate import tabulate
+import folium
+
+def showMap(latitude, longitude, city, region, ip):
+    print("Make html File...")
+    center = [latitude, longitude]
+    map_kenya = folium.Map(location=center, zoom_start=8)
+    folium.Marker(center, popup = f'City:{city}\n Regiony:{region}').add_to(map_kenya)
+    map_kenya.save(f'{ip}.html')
+    print(f'file name: {ip}.html')
 
 def clear(): 
     # for windows
@@ -60,8 +69,9 @@ def get_location():
     print(f"Get {ip_address} Location...")
     response = get(f'https://ipapi.co/{ip_address}/json/').json()
     print_location(ip=response['ip'], network=response['network'], version=response['version'], city=response['city'], region=response['region'], asn=response['asn'], continent_code=response['continent_code'], country=response['country'], country_area=response['country_area'], country_capital=response['country_capital'], country_code=response['country_code'], country_code_iso3=response['country_code_iso3'], country_name=response['country_name'], country_population=response['country_population'], country_tld=response['country_tld'], currency_name=response['currency_name'], in_eu=response['in_eu'], languages=response['languages'], latitude=response['latitude'], longitude=response['longitude'], org=response['org'], postal=response['postal'], region_code=response['region_code'])
+    showMap(latitude=response['latitude'], longitude=response['longitude'], city=response['city'], region=response['region'], ip=response['ip'])
 
-def askClosed():
+def ask_closed():
     close = False 
     print("Do you want to exit [y/n]?")
     answer = input()

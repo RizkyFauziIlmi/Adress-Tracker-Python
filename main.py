@@ -11,7 +11,7 @@ while (exit == False):
     if int(command) == 1:
         functions.clear()
         functions.get_location()
-        close = functions.askClosed()
+        close = functions.ask_closed()
         if (close):
             exit = True
     elif int(command) == 2:
